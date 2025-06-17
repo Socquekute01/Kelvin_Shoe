@@ -1,0 +1,35 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Background Circle -->
+    <path
+        android:fillColor="@color/primary_color"
+        android:pathData="M60,60m-50,0a50,50 0,1 1,100 0a50,50 0,1 1,-100 0"/>
+
+    <!-- Inner Circle -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M60,60m-35,0a35,35 0,1 1,70 0a35,35 0,1 1,-70 0"/>
+
+    <!-- User Icon -->
+    <path
+        android:fillColor="@color/primary_color"
+        android:pathData="M60,45c5.5,0 10,-4.5 10,-10s-4.5,-10 -10,-10 -10,4.5 -10,10 4.5,10 10,10zM60,55c-6.67,0 -20,3.33 -20,10v10h40v-10c0,-6.67 -13.33,-10 -20,-10z"/>
+
+    <!-- Decorative Elements -->
+    <path
+        android:fillColor="#E3F2FD"
+        android:pathData="M35,35m-3,0a3,3 0,1 1,6 0a3,3 0,1 1,-6 0"/>
+    <path
+        android:fillColor="#E3F2FD"
+        android:pathData="M85,35m-3,0a3,3 0,1 1,6 0a3,3 0,1 1,-6 0"/>
+    <path
+        android:fillColor="#E3F2FD"
+        android:pathData="M35,85m-3,0a3,3 0,1 1,6 0a3,3 0,1 1,-6 0"/>
+    <path
+        android:fillColor="#E3F2FD"
+        android:pathData="M85,85m-3,0a3,3 0,1 1,6 0a3,3 0,1 1,-6 0"/>
+</vector>
