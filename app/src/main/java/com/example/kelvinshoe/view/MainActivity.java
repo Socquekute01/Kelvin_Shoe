@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //
                 String username = txtUsername.getText().toString();
                 String password = txtPassword.getText().toString();
                 User userInformation = dbManager.login(username, password);
