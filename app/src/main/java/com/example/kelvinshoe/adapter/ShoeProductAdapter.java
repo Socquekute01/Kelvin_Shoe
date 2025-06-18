@@ -1,4 +1,4 @@
-package com.example.kelvinshoe.view.adapters;
+package com.example.kelvinshoe.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +15,6 @@ import androidx.cardview.widget.CardView;
 import com.example.kelvinshoe.R;
 import com.example.kelvinshoe.model.Product;
 import com.example.kelvinshoe.view.ProductDetailsActivity;
-import com.example.kelvinshoe.view.ProductListActivity;
 
 import java.util.List;
 

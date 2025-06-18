@@ -1,6 +1,7 @@
 package com.example.kelvinshoe.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.kelvinshoe.R;
 import com.example.kelvinshoe.model.Product;
 import com.example.kelvinshoe.utils.DataManager;
-import com.example.kelvinshoe.view.adapters.ShoeProductAdapter;
+import com.example.kelvinshoe.adapter.ShoeProductAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,8 +47,10 @@ public class ProductListActivity extends AppCompatActivity {
         // Initialize DataManager
         dataManager = new DataManager(this);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        userId = Integer.parseInt(sharedPreferences.getString("userId", "-1"));
+
         // Get userId from Intent
-        userId = getIntent().getIntExtra("userId", -1);
         if (userId == -1) {
             Log.e(TAG, "Invalid userId received");
             Toast.makeText(this, "Invalid session. Please log in again.", Toast.LENGTH_SHORT).show();

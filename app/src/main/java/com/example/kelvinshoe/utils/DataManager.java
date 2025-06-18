@@ -222,7 +222,8 @@ public class DataManager {
                     cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_CART_ID)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_USER_ID)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PRODUCT_ID)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_QUANTITY))
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_QUANTITY)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_DESCRIPTION))
             );
             cursor.close();
             return cartItem;
@@ -234,7 +235,7 @@ public class DataManager {
     public List<CartItem> getAllCartItems(int userId) {
         List<CartItem> cartList = new ArrayList<>();
         String[] columns = {DatabaseHelper.COL_CART_ID, DatabaseHelper.COL_USER_ID, DatabaseHelper.COL_PRODUCT_ID,
-                DatabaseHelper.COL_QUANTITY};
+                DatabaseHelper.COL_QUANTITY, DatabaseHelper.COL_DESCRIPTION};
         Cursor cursor = database.query(DatabaseHelper.TABLE_CART, columns,
                 DatabaseHelper.COL_USER_ID + "=?", new String[]{String.valueOf(userId)}, null, null, null);
         if (cursor.moveToFirst()) {
@@ -243,7 +244,8 @@ public class DataManager {
                         cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_CART_ID)),
                         cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_USER_ID)),
                         cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PRODUCT_ID)),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_QUANTITY))
+                        cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_QUANTITY)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_DESCRIPTION))
                 );
                 cartList.add(cartItem);
             } while (cursor.moveToNext());

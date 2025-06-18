@@ -28,7 +28,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_CART = "Cart";
     public static final String COL_CART_ID = "cart_id";
     public static final String COL_QUANTITY = "quantity";
-
     // Tạo bảng Orders
     public static final String TABLE_ORDERS = "Orders";
     public static final String COL_ORDER_ID = "order_id";
@@ -69,6 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COL_USER_ID + " INTEGER NOT NULL," +
                 COL_PRODUCT_ID + " INTEGER NOT NULL," +
                 COL_QUANTITY + " INTEGER NOT NULL," +
+                COL_DESCRIPTION + " TEXT," +
                 "FOREIGN KEY (" + COL_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COL_USER_ID + ")," +
                 "FOREIGN KEY (" + COL_PRODUCT_ID + ") REFERENCES " + TABLE_PRODUCTS + "(" + COL_PRODUCT_ID + "))";
         db.execSQL(CREATE_CART_TABLE);

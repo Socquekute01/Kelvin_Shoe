@@ -1,6 +1,7 @@
 package com.example.kelvinshoe.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -49,9 +50,15 @@ public class RegisterActivity extends AppCompatActivity {
                     User newUser = new User(username, password, email, fullName);
                     User userInformation = dbManager.addUser(newUser);
                     if (userInformation != null) {
+                        // Lưu dữ liệu vào shared preference
+                        String userID = String.valueOf(userInformation.getUserId());
+                        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("userId", userID);
+                        editor.apply();
+
                         Toast.makeText(RegisterActivity.this, "Register success!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(RegisterActivity.this, ProductListActivity.class);
-                        intent.putExtra("userId", userInformation.getUserId());
                         startActivity(intent);
                         finish();
                     }
