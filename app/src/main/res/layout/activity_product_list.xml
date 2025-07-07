@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Header Section -->
+        <!-- Header Section (Unchanged) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
 
         </LinearLayout>
 
-        <!-- Categories Section -->
+        <!-- Categories Section (Modified) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -103,18 +103,21 @@
                 android:textColor="#2C3E50"
                 android:layout_marginBottom="16dp" />
 
+            <!-- Row 1: 4 Categories -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="4"
+                android:layout_marginBottom="8dp">
 
+                <!-- Category: Giày Nam -->
                 <LinearLayout
                     android:id="@+id/category_men"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
+                    android:layout_height="80dp"
                     android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="6dp"
                     android:background="@drawable/category_card_background"
                     android:orientation="vertical"
                     android:gravity="center"
@@ -125,25 +128,26 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="👞"
-                        android:textSize="28sp"
+                        android:textSize="24sp"
                         android:layout_marginBottom="4dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Giày Nam"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:textStyle="bold"
                         android:textColor="#2C3E50" />
 
                 </LinearLayout>
 
+                <!-- Category: Giày Nữ -->
                 <LinearLayout
                     android:id="@+id/category_women"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
+                    android:layout_height="80dp"
                     android:layout_weight="1"
-                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginHorizontal="3dp"
                     android:background="@drawable/category_card_background"
                     android:orientation="vertical"
                     android:gravity="center"
@@ -154,25 +158,26 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="👠"
-                        android:textSize="28sp"
+                        android:textSize="24sp"
                         android:layout_marginBottom="4dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Giày Nữ"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:textStyle="bold"
                         android:textColor="#2C3E50" />
 
                 </LinearLayout>
 
+                <!-- Category: Thể Thao -->
                 <LinearLayout
                     android:id="@+id/category_sport"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
+                    android:layout_height="80dp"
                     android:layout_weight="1"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginHorizontal="3dp"
                     android:background="@drawable/category_card_background"
                     android:orientation="vertical"
                     android:gravity="center"
@@ -183,14 +188,174 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="👟"
-                        android:textSize="28sp"
+                        android:textSize="24sp"
                         android:layout_marginBottom="4dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Thể Thao"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="#2C3E50" />
+
+                </LinearLayout>
+
+                <!-- Category: Trẻ Em -->
+                <LinearLayout
+                    android:id="@+id/category_kids"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/category_card_background"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="👶"
+                        android:textSize="24sp"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Trẻ Em"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="#2C3E50" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Row 2: 4 Categories -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:layout_marginBottom="8dp">
+
+                <!-- Category: Sandal -->
+                <LinearLayout
+                    android:id="@+id/category_sandal"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/category_card_background"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🩴"
+                        android:textSize="24sp"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sandal"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="#2C3E50" />
+
+                </LinearLayout>
+
+                <!-- Category: Bốt -->
+                <LinearLayout
+                    android:id="@+id/category_boots"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="3dp"
+                    android:background="@drawable/category_card_background"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🥾"
+                        android:textSize="24sp"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bốt"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="#2C3E50" />
+
+                </LinearLayout>
+
+                <!-- Category: Dép -->
+                <LinearLayout
+                    android:id="@+id/category_slippers"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="3dp"
+                    android:background="@drawable/category_card_background"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🩳"
+                        android:textSize="24sp"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dép"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="#2C3E50" />
+
+                </LinearLayout>
+
+                <!-- Category: Giày Cao Cổ -->
+                <LinearLayout
+                    android:id="@+id/category_high_top"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/category_card_background"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="👢"
+                        android:textSize="24sp"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cao Cổ"
+                        android:textSize="12sp"
                         android:textStyle="bold"
                         android:textColor="#2C3E50" />
 
@@ -200,7 +365,32 @@
 
         </LinearLayout>
 
-        <!-- Featured Products Section -->
+        <!-- Auto-Sliding Banner Section (Unchanged) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingBottom="20dp">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_banner"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Banner Indicators -->
+            <LinearLayout
+                android:id="@+id/ll_banner_indicators"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="8dp" />
+
+        </LinearLayout>
+
+        <!-- Featured Products Section 1: Sản phẩm nổi bật (Unchanged) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -237,10 +427,107 @@
 
             </LinearLayout>
 
-            <!-- Products ListView -->
-            <ListView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/lv_products"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@null"
+                android:dividerHeight="8dp"
+                android:scrollbars="none"
+                android:clipToPadding="false"
+                android:paddingBottom="8dp" />
+
+        </LinearLayout>
+
+        <!-- Featured Products Section 2: Sản phẩm mới -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingBottom="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Sản phẩm mới"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#2C3E50" />
+
+                <TextView
+                    android:id="@+id/tv_see_all_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Xem tất cả →"
+                    android:textSize="14sp"
+                    android:textColor="#3498DB"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="8dp" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lv_products_new"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@null"
+                android:dividerHeight="8dp"
+                android:scrollbars="none"
+                android:clipToPadding="false"
+                android:paddingBottom="8dp" />
+
+        </LinearLayout>
+
+        <!-- Featured Products Section 3: Sản phẩm bán chạy -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingBottom="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Sản phẩm bán chạy"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#2C3E50" />
+
+                <TextView
+                    android:id="@+id/tv_see_all_bestsellers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Xem tất cả →"
+                    android:textSize="14sp"
+                    android:textColor="#3498DB"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="8dp" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lv_products_bestsellers"
+                android:layout_width="wrap_content"
                 android:layout_height="400dp"
                 android:divider="@null"
                 android:dividerHeight="8dp"
@@ -250,7 +537,7 @@
 
         </LinearLayout>
 
-        <!-- Bottom Promotion Banner -->
+        <!-- Bottom Promotion Banner (Unchanged) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="120dp"

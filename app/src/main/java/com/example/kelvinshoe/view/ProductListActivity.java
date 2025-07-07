@@ -3,6 +3,8 @@ package com.example.kelvinshoe.view;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,17 +17,25 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
+
 import com.example.kelvinshoe.R;
+import com.example.kelvinshoe.adapter.BannerAdapter;
+import com.example.kelvinshoe.adapter.BannerItem;
+import com.example.kelvinshoe.adapter.ShoeProductRecyclerAdapter;
 import com.example.kelvinshoe.model.Product;
 import com.example.kelvinshoe.utils.DataManager;
-import com.example.kelvinshoe.adapter.ShoeProductAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductListActivity extends AppCompatActivity {
     private static final String TAG = "ProductListActivity";
     private DataManager dataManager;
-    private ListView lvProducts;
+    private RecyclerView lvProducts;
+    private RecyclerView lvProductsNew;
+    private RecyclerView lvBestSeller;
     private EditText etSearch;
     private ImageView ivCart, ivProfile;
     private LinearLayout categoryMen, categoryWomen, categorySport;
@@ -34,7 +44,7 @@ public class ProductListActivity extends AppCompatActivity {
 
     private List<Product> allProducts;
     private List<Product> filteredProducts;
-    private ShoeProductAdapter adapter;
+    private ShoeProductRecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +76,16 @@ public class ProductListActivity extends AppCompatActivity {
 
         // Setup listeners
         setupListeners();
+
+        // Setup banner
+        setupBanner();
+        startAutoSlide();
     }
 
     private void initViews() {
         lvProducts = findViewById(R.id.lv_products);
+        lvProductsNew = findViewById(R.id.lv_products_new);
+        lvBestSeller = findViewById(R.id.lv_products_bestsellers);
         etSearch = findViewById(R.id.et_search);
         ivCart = findViewById(R.id.iv_cart);
         ivProfile = findViewById(R.id.iv_profile);
@@ -77,6 +93,8 @@ public class ProductListActivity extends AppCompatActivity {
         categoryWomen = findViewById(R.id.category_women);
         categorySport = findViewById(R.id.category_sport);
         tvSeeAll = findViewById(R.id.tv_see_all);
+        vpBanner = findViewById(R.id.vp_banner);
+        llBannerIndicators = findViewById(R.id.ll_banner_indicators);
     }
 
     private void loadProducts() {
@@ -95,10 +113,15 @@ public class ProductListActivity extends AppCompatActivity {
 
         // Initialize filtered products
         filteredProducts = new ArrayList<>(allProducts);
-
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        lvProducts.setLayoutManager(layoutManager);
+        lvProductsNew.setLayoutManager(layoutManager);
+        lvBestSeller.setLayoutManager(layoutManager);
         // Setup adapter
-        adapter = new ShoeProductAdapter(this, filteredProducts);
+        adapter = new ShoeProductRecyclerAdapter(this, filteredProducts);
         lvProducts.setAdapter(adapter);
+        lvProductsNew.setAdapter(adapter);
+        lvBestSeller.setAdapter(adapter);
     }
 
     private void addSampleShoeProducts() {
@@ -144,16 +167,16 @@ public class ProductListActivity extends AppCompatActivity {
         });
 
         // Product item click
-        lvProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Product selectedProduct = filteredProducts.get(position);
-                Intent intent = new Intent(ProductListActivity.this, ProductDetailsActivity.class);
-                intent.putExtra("productId", selectedProduct.getProductId());
-                intent.putExtra("userId", userId);
-                startActivity(intent);
-            }
-        });
+//        lvProducts.setonI(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Product selectedProduct = filteredProducts.get(position);
+//                Intent intent = new Intent(ProductListActivity.this, ProductDetailsActivity.class);
+//                intent.putExtra("productId", selectedProduct.getProductId());
+//                intent.putExtra("userId", userId);
+//                startActivity(intent);
+//            }
+//        });
 
         // Category clicks
         categoryMen.setOnClickListener(new View.OnClickListener() {
@@ -277,6 +300,105 @@ public class ProductListActivity extends AppCompatActivity {
             Toast.makeText(this, "Không có sản phẩm trong danh mục này", Toast.LENGTH_SHORT).show();
         }
     }
+    private ViewPager2 vpBanner;
+    private LinearLayout llBannerIndicators;
+    private BannerAdapter bannerAdapter;
+    private List<BannerItem> bannerList;
+    private Handler handler;
+    private Runnable runnable;
+    private int currentPage = 0;
+    private void setupBanner() {
+        // Create sample banner data
+        bannerList = new ArrayList<>();
+        bannerList.add(new BannerItem(
+                "Flash Sale 70%",
+                "Giảm giá cực sốc cho tất cả giày thể thao",
+                R.drawable.banner1,
+                "https://yourstore.com/flash-sale"
+        ));
+        bannerList.add(new BannerItem(
+                "Bộ sưu tập mới",
+                "Khám phá xu hướng giày thời trang 2025",
+                R.drawable.banner2,
+                "https://yourstore.com/new-collection"
+        ));
+        bannerList.add(new BannerItem(
+                "Miễn phí vận chuyển",
+                "Đơn hàng từ 500k được giao hàng miễn phí",
+                R.drawable.banner3,
+                "https://yourstore.com/free-shipping"
+        ));
+
+        // Setup adapter
+        bannerAdapter = new BannerAdapter(this, bannerList);
+        bannerAdapter.setOnBannerClickListener(banner -> {
+            // Handle banner click
+            // Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(banner.getActionUrl()));
+            // startActivity(intent);
+        });
+
+        vpBanner.setAdapter(bannerAdapter);
+
+        // Setup indicators
+        setupIndicators();
+
+        // Setup page change callback
+        vpBanner.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                currentPage = position;
+                updateIndicators(position);
+            }
+        });
+    }
+
+    private void setupIndicators() {
+        llBannerIndicators.removeAllViews();
+
+        for (int i = 0; i < bannerList.size(); i++) {
+            View indicator = new View(this);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(24, 24);
+            params.setMargins(8, 0, 8, 0);
+            indicator.setLayoutParams(params);
+
+            if (i == 0) {
+                indicator.setBackgroundResource(R.drawable.indicator_active);
+            } else {
+                indicator.setBackgroundResource(R.drawable.indicator_inactive);
+            }
+
+            llBannerIndicators.addView(indicator);
+        }
+    }
+
+    private void updateIndicators(int position) {
+        for (int i = 0; i < llBannerIndicators.getChildCount(); i++) {
+            View indicator = llBannerIndicators.getChildAt(i);
+            if (i == position) {
+                indicator.setBackgroundResource(R.drawable.indicator_active);
+            } else {
+                indicator.setBackgroundResource(R.drawable.indicator_inactive);
+            }
+        }
+    }
+
+    private void startAutoSlide() {
+        handler = new Handler(Looper.getMainLooper());
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                if (currentPage == bannerList.size() - 1) {
+                    currentPage = 0;
+                } else {
+                    currentPage++;
+                }
+                vpBanner.setCurrentItem(currentPage, true);
+                handler.postDelayed(this, 3000); // 3 seconds
+            }
+        };
+        handler.postDelayed(runnable, 3000);
+    }
 
     @Override
     protected void onDestroy() {
@@ -284,5 +406,21 @@ public class ProductListActivity extends AppCompatActivity {
         if (dataManager != null) {
             dataManager.close();
         }
+        if (handler != null && runnable != null) {
+            handler.removeCallbacks(runnable);
+        }
+    }
+
+    protected void onPause() {
+        super.onPause();
+        if (handler != null && runnable != null) {
+            handler.removeCallbacks(runnable);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startAutoSlide();
     }
 }
