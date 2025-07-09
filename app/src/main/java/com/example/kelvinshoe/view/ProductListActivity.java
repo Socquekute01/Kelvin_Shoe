@@ -113,10 +113,12 @@ public class ProductListActivity extends AppCompatActivity {
 
         // Initialize filtered products
         filteredProducts = new ArrayList<>(allProducts);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        lvProducts.setLayoutManager(layoutManager);
-        lvProductsNew.setLayoutManager(layoutManager);
-        lvBestSeller.setLayoutManager(layoutManager);
+        LinearLayoutManager layoutOutStandingManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutNewManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutSellerManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        lvProducts.setLayoutManager(layoutOutStandingManager);
+        lvProductsNew.setLayoutManager(layoutNewManager);
+        lvBestSeller.setLayoutManager(layoutSellerManager);
         // Setup adapter
         adapter = new ShoeProductRecyclerAdapter(this, filteredProducts);
         lvProducts.setAdapter(adapter);

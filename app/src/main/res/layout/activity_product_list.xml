@@ -499,41 +499,41 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginBottom="16dp"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="16dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Sản phẩm bán chạy"
+                    android:textColor="#2C3E50"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="#2C3E50" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_see_all_bestsellers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Xem tất cả →"
-                    android:textSize="14sp"
-                    android:textColor="#3498DB"
                     android:clickable="true"
                     android:focusable="true"
-                    android:padding="8dp" />
+                    android:padding="8dp"
+                    android:text="Xem tất cả →"
+                    android:textColor="#3498DB"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/lv_products_bestsellers"
                 android:layout_width="wrap_content"
-                android:layout_height="400dp"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
                 android:divider="@null"
                 android:dividerHeight="8dp"
-                android:scrollbars="none"
-                android:clipToPadding="false"
-                android:paddingBottom="8dp" />
+                android:paddingBottom="8dp"
+                android:scrollbars="none" />
 
         </LinearLayout>
 
