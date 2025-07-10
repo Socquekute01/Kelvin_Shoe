@@ -19,7 +19,7 @@ import com.example.kelvinshoe.view.ProductDetailsActivity;
 import java.util.List;
 
 public class ShoeProductRecyclerAdapter extends RecyclerView.Adapter<ShoeProductRecyclerAdapter.ViewHolder> {
-    private Context context;
+    private final Context context;
     private List<Product> products;
 
     public ShoeProductRecyclerAdapter(Context context, List<Product> products) {

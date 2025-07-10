@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.kelvinshoe.R;
 
 import java.util.List;
@@ -84,8 +85,8 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
             tvTitle.setText(banner.getTitle());
             tvDescription.setText(banner.getDescription());
             // Load image using your preferred image loading library (Glide, Picasso, etc.)
-            // Glide.with(context).load(banner.getImageUrl()).into(ivBanner);
-            ivBanner.setImageResource(banner.getImageResource()); // For local images
+             Glide.with(context).load(banner.getActionUrl()).into(ivBanner);
+//            ivBanner.setImageResource(banner.getImageUrl()); // For local images
         }
     }
 }

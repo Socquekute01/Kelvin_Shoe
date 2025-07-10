@@ -56,7 +56,6 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnCar
         dbManager = new DataManager(this);
 
         initViews();
-        setupRecyclerView();
         loadCartData();
         setupClickListeners();
 
@@ -76,8 +75,6 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnCar
     }
 
     private void setupRecyclerView() {
-        cartItems = new ArrayList<>();
-        cartAdapter = new CartAdapter(this, cartItems, this);
         recyclerCartItems.setLayoutManager(new LinearLayoutManager(this));
         recyclerCartItems.setAdapter(cartAdapter);
     }
@@ -85,7 +82,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnCar
     private void loadCartData() {
         // Giả lập dữ liệu giỏ hàng
         // Trong thực tế, bạn sẽ load từ database hoặc SharedPreferences
-        cartItems.clear();
+        if (cartItems != null) cartItems.clear();
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         int userId = Integer.parseInt(sharedPreferences.getString("userId", "-1"));
@@ -95,8 +92,10 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnCar
 //        cartItems.add(new CartItem(1, 1, 1, 1, "Nike Air Max 270 - Size 42 - Đen"));
 //        cartItems.add(new CartItem(2, 1, 2, 2, "Adidas Ultraboost 22 - Size 41 - Trắng"));
 //        cartItems.add(new CartItem(3, 1, 3, 1, "Converse Chuck Taylor - Size 43 - Đỏ"));
-
+        cartAdapter = new CartAdapter(this, cartItems, this);
         cartAdapter.notifyDataSetChanged();
+        recyclerCartItems.setLayoutManager(new LinearLayoutManager(this));
+        recyclerCartItems.setAdapter(cartAdapter);
         calculateTotal();
     }
 
