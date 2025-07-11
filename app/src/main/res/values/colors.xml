@@ -63,4 +63,6 @@
     <!-- Standard Colors -->
     <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
+    <color name="success_green">#4CAF50</color>
+    <color name="success_light">#E8F5E8</color>
 </resources>

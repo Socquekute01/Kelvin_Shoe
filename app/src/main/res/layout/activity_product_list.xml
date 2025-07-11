@@ -48,10 +48,9 @@
                     android:id="@+id/iv_profile"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:src="@drawable/ic_profile"
-                    android:background="@drawable/circle_background"
+                    android:contentDescription="Hồ sơ"
                     android:padding="6dp"
-                    android:contentDescription="Hồ sơ" />
+                    android:src="@drawable/ic_profile" />
 
             </LinearLayout>
 

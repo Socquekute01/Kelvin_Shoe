@@ -1,4 +1,4 @@
-package com.example.kelvinshoe.adapter;
+package com.example.kelvinshoe.model;
 
 // BannerItem.java
 public class BannerItem {

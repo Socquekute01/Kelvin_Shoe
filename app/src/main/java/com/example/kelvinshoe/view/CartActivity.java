@@ -40,11 +40,9 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnCar
     private ImageView btnBack;
 
     private double subtotal = 0;
-    private double shippingFee = 30000;
+    private double shippingFee = 2;
     private double discount = 0;
     private double total = 0;
-
-    private NumberFormat currencyFormat;
 
     private DataManager dbManager;
 
@@ -58,8 +56,6 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnCar
         initViews();
         loadCartData();
         setupClickListeners();
-
-        currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
     }
 
     private void initViews() {
@@ -115,8 +111,8 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnCar
 
             // Chuyển đến màn hình thanh toán
             Intent intent = new Intent(this, CheckoutActivity.class);
-            intent.putExtra("total_amount", total);
-            intent.putExtra("cart_items_count", cartItems.size());
+            intent.putExtra("price", String.valueOf(total));
+//            intent.putExtra("cart_items_count", cartItems.size());
             startActivity(intent);
         });
     }
@@ -155,7 +151,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnCar
 
         // Tính tổng tiền sản phẩm (giả lập giá)
         for (CartItem item : cartItems) {
-            double itemPrice = getProductPrice(item.getProductId());
+            double itemPrice = dbManager.getProductById(item.getProductId()).getPrice();
             subtotal += itemPrice * item.getQuantity();
         }
 
@@ -165,21 +161,11 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnCar
         updatePriceDisplay();
     }
 
-    private double getProductPrice(int productId) {
-        // Giả lập giá sản phẩm
-        switch (productId) {
-            case 1: return 2500000; // Nike Air Max 270
-            case 2: return 3200000; // Adidas Ultraboost 22
-            case 3: return 1800000; // Converse Chuck Taylor
-            default: return 1000000;
-        }
-    }
-
     private void updatePriceDisplay() {
-        tvSubtotal.setText(formatCurrency(subtotal));
-        tvShippingFee.setText(formatCurrency(shippingFee));
-        tvDiscount.setText("-" + formatCurrency(discount));
-        tvTotal.setText(formatCurrency(total));
+        tvSubtotal.setText(String.format("$%.2f", subtotal));
+        tvShippingFee.setText(String.format("$%.2f", shippingFee));
+        tvDiscount.setText("-" + String.format("$%.2f", discount));
+        tvTotal.setText(String.format("$%.2f", total));
     }
 
     private String formatCurrency(double amount) {

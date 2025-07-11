@@ -26,6 +26,7 @@ import com.example.kelvinshoe.utils.DataManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CategoryActivity extends AppCompatActivity {
     private static final String TAG = "CategoryActivity";
@@ -36,10 +37,11 @@ public class CategoryActivity extends AppCompatActivity {
     private EditText etSearch;
     private ImageView ivCart, ivProfile;
     private int userId;
+    private String cateType;
     private List<Product> allProducts;
     private List<Product> filteredProducts;
     private ShoeProductRecyclerAdapter adapter;
-
+    TextView tv_cate_title;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,23 +49,12 @@ public class CategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_category);
         // Initialize DataManager
         dataManager = new DataManager(this);
-
+        tv_cate_title = findViewById(R.id.tv_Cate_Title);
         // Initialize views
         initViews();
-
-        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-        userId = Integer.parseInt(sharedPreferences.getString("userId", "-1"));
-
-        // Get userId from Intent
-        if (userId == -1) {
-            Log.e(TAG, "Invalid userId received");
-            Toast.makeText(this, "Invalid session. Please log in again.", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-            return;
-        }
-
-        Log.d(TAG, "User ID: " + userId);
+        Bundle bundle = getIntent().getExtras();
+        assert bundle != null;
+        cateType = bundle.getString("cate_type", "all");
 
         // Load and display products
         loadProducts();
@@ -83,6 +74,13 @@ public class CategoryActivity extends AppCompatActivity {
                 Toast.makeText(this, "Không thể tải sản phẩm.", Toast.LENGTH_SHORT).show();
                 return;
             }
+        }
+        if (cateType.equals("all") || cateType.equals("best_sellers") || cateType.equals("news")) {
+            tv_cate_title.setText("Tất cả sản phẩm");
+        }
+        else {
+            tv_cate_title.setText("Danh mục " + cateType);
+            allProducts = allProducts.stream().filter(product -> product.getCategoryId() == dataManager.getCategoryId(cateType)).collect(Collectors.toList());
         }
 
         // Initialize filtered products
@@ -121,9 +119,7 @@ public class CategoryActivity extends AppCompatActivity {
         ivCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to cart activity
                 Intent intent = new Intent(CategoryActivity.this, CartActivity.class);
-                intent.putExtra("userId", userId);
                 startActivity(intent);
             }
         });
@@ -132,9 +128,7 @@ public class CategoryActivity extends AppCompatActivity {
         ivProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to profile activity
                 Intent intent = new Intent(CategoryActivity.this, ProfileActivity.class);
-                intent.putExtra("userId", userId);
                 startActivity(intent);
             }
         });

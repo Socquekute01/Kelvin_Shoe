@@ -6,13 +6,17 @@ public class Product {
     private String description;
     private double price;
     private int stock;
+    private int categoryId;
+    private String imageUrl;
 
-    public Product(int productId, String name, String description, double price, int stock) {
+    public Product(int productId, String name, String description, double price, int stock, int categoryId, String imageUrl) {
         this.productId = productId;
         this.name = name;
         this.description = description;
         this.price = price;
         this.stock = stock;
+        this.categoryId = categoryId;
+        this.imageUrl = imageUrl;
     }
     public Product(String name, String description, double price, int stock) {
         this.name = name;
@@ -31,4 +35,16 @@ public class Product {
     public void setPrice(double price) { this.price = price; }
     public int getStock() { return stock; }
     public void setStock(int stock) { this.stock = stock; }
+    public int getCategoryId() {
+        return categoryId;
+    }
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+    public String getImageUrl() {
+        return imageUrl;
+    }
+    public void setImaegUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }

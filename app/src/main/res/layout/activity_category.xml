@@ -103,13 +103,14 @@
                 android:layout_marginBottom="16dp">
 
                 <TextView
+                    android:id="@+id/tv_Cate_Title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Danh mục sản phẩm"
+                    android:textColor="#2C3E50"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="#2C3E50" />
+                    android:textStyle="bold" />
 
             </LinearLayout>
 

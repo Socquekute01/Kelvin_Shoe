@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.kelvinshoe.R;
+import com.example.kelvinshoe.model.BannerItem;
 
 import java.util.List;
 

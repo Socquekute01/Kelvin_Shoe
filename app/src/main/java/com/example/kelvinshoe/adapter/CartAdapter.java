@@ -10,8 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.kelvinshoe.R;
 import com.example.kelvinshoe.model.CartItem;
+import com.example.kelvinshoe.model.Product;
+import com.example.kelvinshoe.utils.DataManager;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -81,63 +84,22 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         }
 
         public void bind(CartItem item) {
-            // Set product info
             setProductInfo(item);
 
             // Set quantity
             tvQuantity.setText(String.valueOf(item.getQuantity()));
-
-            // Set price
-            double price = getProductPrice(item.getProductId());
-            tvProductPrice.setText(formatCurrency(price));
-
-            // Set product image based on product type
-            setProductImage(item.getProductId());
-
-            // Set click listeners
             setupClickListeners(item);
         }
 
         private void setProductInfo(CartItem item) {
             // Giả lập thông tin sản phẩm dựa trên productId
-            switch (item.getProductId()) {
-                case 1:
-                    tvProductName.setText("Nike Air Max 270");
-                    tvProductDescription.setText("Giày thể thao nam");
-                    break;
-                case 2:
-                    tvProductName.setText("Adidas Ultraboost 22");
-                    tvProductDescription.setText("Giày chạy bộ");
-                    break;
-                case 3:
-                    tvProductName.setText("Converse Chuck Taylor");
-                    tvProductDescription.setText("Giày sneaker classic");
-                    break;
-                default:
-                    tvProductName.setText("Sản phẩm");
-                    tvProductDescription.setText(item.getDescription());
-                    break;
-            }
+            DataManager dataManager = new DataManager(context);
+            Product product = dataManager.getProductById(item.getProductId());
+            tvProductName.setText(product.getName());
+            tvProductDescription.setText(product.getDescription());
+            Glide.with(context).load(product.getImageUrl()).into(imgProduct);
+            tvProductPrice.setText(String.format("$%.2f", product.getPrice()));
         }
-
-        private void setProductImage(int productId) {
-            // Set image based on product type
-            switch (productId) {
-                case 1:
-                    imgProduct.setImageResource(R.drawable.ic_sport_shoe);
-                    break;
-                case 2:
-                    imgProduct.setImageResource(R.drawable.ic_boot);
-                    break;
-                case 3:
-                    imgProduct.setImageResource(R.drawable.ic_sandal);
-                    break;
-                default:
-                    imgProduct.setImageResource(R.drawable.ic_default_shoe);
-                    break;
-            }
-        }
-
         private void setupClickListeners(CartItem item) {
             // Decrease quantity
             btnDecrease.setOnClickListener(v -> {
@@ -187,20 +149,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                     listener.onItemRemoved(item);
                 }
             });
-        }
-
-        private double getProductPrice(int productId) {
-            // Giả lập giá sản phẩm
-            switch (productId) {
-                case 1: return 2500000; // Nike Air Max 270
-                case 2: return 3200000; // Adidas Ultraboost 22
-                case 3: return 1800000; // Converse Chuck Taylor
-                default: return 1000000;
-            }
-        }
-
-        private String formatCurrency(double amount) {
-            return NumberFormat.getNumberInstance(new Locale("vi", "VN")).format(amount) + "đ";
         }
     }
 }

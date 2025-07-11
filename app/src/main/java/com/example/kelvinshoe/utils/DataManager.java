@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.kelvinshoe.model.CartItem;
 import com.example.kelvinshoe.model.Notification;
@@ -135,16 +136,71 @@ public class DataManager {
         values.put(DatabaseHelper.COL_DESCRIPTION, product.getDescription());
         values.put(DatabaseHelper.COL_PRICE, product.getPrice());
         values.put(DatabaseHelper.COL_STOCK, product.getStock());
+        values.put(DatabaseHelper.COL_CATEGORY_ID, product.getCategoryId()); // Add category_id
+        values.put(DatabaseHelper.COL_IMAGE_URL, product.getImageUrl()); // Add category_id
         long newRowId = database.insert(DatabaseHelper.TABLE_PRODUCTS, null, values);
         if (newRowId != -1) {
             product.setProductId((int) newRowId);
         }
         return product;
     }
+    public int getCategoryId(String categoryName) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT " + DatabaseHelper.COL_CATEGORY_ID + " FROM " +
+                        DatabaseHelper.TABLE_CATEGORIES + " WHERE " + DatabaseHelper.COL_CATEGORY_NAME + " = ?",
+                new String[]{categoryName});
+        try {
+            if (cursor.moveToFirst()) {
+                return cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_CATEGORY_ID));
+            } else {
+                throw new IllegalArgumentException("Category not found: " + categoryName);
+            }
+        } finally {
+            cursor.close();
+        }
+    }
+    public void addSampleCategories() {
+        String TAG = "Category";
+        String[] categories = {
+                "Giày Nam",
+                "Giày Nữ",
+                "Thể Thao",
+                "Trẻ Em",
+                "Sandal",
+                "Bốt",
+                "Dép",
+                "Giày Cao Cổ"
+        };
 
+        try {
+            for (String category : categories) {
+                // Check if category already exists
+                Cursor cursor = database.rawQuery(
+                        "SELECT " + DatabaseHelper.COL_CATEGORY_ID + " FROM " + DatabaseHelper.TABLE_CATEGORIES +
+                                " WHERE " + DatabaseHelper.COL_CATEGORY_NAME + " = ?",
+                        new String[]{category}
+                );
+                if (!cursor.moveToFirst()) {
+                    // Category doesn't exist, insert it
+                    ContentValues values = new ContentValues();
+                    values.put(DatabaseHelper.COL_CATEGORY_NAME, category);
+                    long newRowId = database.insert(DatabaseHelper.TABLE_CATEGORIES, null, values);
+                    if (newRowId == -1) {
+                        Log.e(TAG, "Failed to insert category: " + category);
+                    } else {
+                        Log.d(TAG, "Inserted category: " + category);
+                    }
+                }
+                cursor.close();
+            }
+            Log.d(TAG, "Sample categories added successfully.");
+        } catch (Exception e) {
+            Log.e(TAG, "Error adding sample categories: " + e.getMessage(), e);
+        }
+    }
     public Product getProductById(int productId) {
         String[] columns = {DatabaseHelper.COL_PRODUCT_ID, DatabaseHelper.COL_NAME, DatabaseHelper.COL_DESCRIPTION,
-                DatabaseHelper.COL_PRICE, DatabaseHelper.COL_STOCK};
+                DatabaseHelper.COL_PRICE, DatabaseHelper.COL_STOCK, DatabaseHelper.COL_CATEGORY_ID, DatabaseHelper.IMAGE_URL};
         Cursor cursor = database.query(DatabaseHelper.TABLE_PRODUCTS, columns,
                 DatabaseHelper.COL_PRODUCT_ID + "=?", new String[]{String.valueOf(productId)}, null, null, null);
         if (cursor.moveToFirst()) {
@@ -153,7 +209,9 @@ public class DataManager {
                     cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_NAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_DESCRIPTION)),
                     cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PRICE)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_STOCK))
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_STOCK)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_CATEGORY_ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.IMAGE_URL))
             );
             cursor.close();
             return product;
@@ -165,7 +223,7 @@ public class DataManager {
     public List<Product> getAllProducts() {
         List<Product> productList = new ArrayList<>();
         String[] columns = {DatabaseHelper.COL_PRODUCT_ID, DatabaseHelper.COL_NAME, DatabaseHelper.COL_DESCRIPTION,
-                DatabaseHelper.COL_PRICE, DatabaseHelper.COL_STOCK};
+                DatabaseHelper.COL_PRICE, DatabaseHelper.COL_STOCK, DatabaseHelper.COL_CATEGORY_ID, DatabaseHelper.COL_IMAGE_URL};
         Cursor cursor = database.query(DatabaseHelper.TABLE_PRODUCTS, columns, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
@@ -174,7 +232,9 @@ public class DataManager {
                         cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_NAME)),
                         cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_DESCRIPTION)),
                         cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PRICE)),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_STOCK))
+                        cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_STOCK)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_CATEGORY_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_IMAGE_URL))
                 );
                 productList.add(product);
             } while (cursor.moveToNext());

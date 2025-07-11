@@ -22,10 +22,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.RegisterActivity" />
-        <activity android:name=".view.ProductListActivity" /> <!-- Đảm bảo dòng này có -->
+        <activity android:name=".view.ProductListActivity" />
         <activity android:name=".view.ProductDetailsActivity" />
         <activity android:name=".view.CartActivity" />
         <activity android:name=".view.CategoryActivity" />
+        <activity android:name=".view.ProfileActivity" />
+        <activity android:name=".view.CheckoutActivity" />
     </application>
 
 </manifest>

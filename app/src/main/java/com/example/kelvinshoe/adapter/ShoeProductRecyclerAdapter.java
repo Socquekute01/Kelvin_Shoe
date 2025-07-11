@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.kelvinshoe.R;
 import com.example.kelvinshoe.model.Product;
 import com.example.kelvinshoe.view.ProductDetailsActivity;
@@ -59,8 +60,8 @@ public class ShoeProductRecyclerAdapter extends RecyclerView.Adapter<ShoeProduct
             holder.tvProductCategory.setText(category);
 
             // Set product image
-            setProductImage(holder.ivProductImage, currentProduct.getName());
-
+//            setProductImage(holder.ivProductImage, currentProduct.getName());
+            Glide.with(context).load(currentProduct.getImageUrl()).into(holder.ivProductImage);
             // Handle favorite button click
             holder.ivFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override

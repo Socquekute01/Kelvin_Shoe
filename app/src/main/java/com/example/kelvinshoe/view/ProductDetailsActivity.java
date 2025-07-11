@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.kelvinshoe.R;
 import com.example.kelvinshoe.model.CartItem;
 import com.example.kelvinshoe.model.Product;
@@ -126,38 +127,38 @@ public class ProductDetailsActivity extends AppCompatActivity {
         // Load product from database using productId
         currentProduct = databaseHelper.getProductById(productId);
 
-        if (currentProduct == null) {
-            // Create sample data if not found in database
-            createSampleProduct();
-        }
+//        if (currentProduct == null) {
+//            // Create sample data if not found in database
+//            createSampleProduct();
+//        }
 
         displayProductInfo();
         checkFavoriteStatus();
     }
 
-    private void createSampleProduct() {
-        // Create sample product data based on productId
-        switch (productId) {
-            case 1:
-                currentProduct = new Product(1, "Nike Air Max 270", "Premium quality sports shoes with advanced cushioning technology. Perfect for running and everyday wear.", 129.99, 15);
-                break;
-            case 2:
-                currentProduct = new Product(2, "Adidas Ultraboost", "High-performance running shoes with responsive cushioning and energy return.", 179.99, 8);
-                break;
-            case 3:
-                currentProduct = new Product(3, "Converse All Star", "Classic canvas sneakers perfect for casual wear. Timeless design meets modern comfort.", 65.99, 25);
-                break;
-            case 4:
-                currentProduct = new Product(4, "Leather Boots", "Durable leather boots for outdoor adventures. Waterproof and comfortable for all-day wear.", 199.99, 12);
-                break;
-            case 5:
-                currentProduct = new Product(5, "Summer Sandals", "Comfortable sandals perfect for beach days and summer walks. Lightweight and breathable.", 45.99, 30);
-                break;
-            default:
-                currentProduct = new Product(productId, "Fashion Shoe", "Stylish footwear for modern lifestyle. Comfortable and trendy design.", 89.99, 20);
-                break;
-        }
-    }
+//    private void createSampleProduct() {
+//        // Create sample product data based on productId
+//        switch (productId) {
+//            case 1:
+//                currentProduct = new Product(1, "Nike Air Max 270", "Premium quality sports shoes with advanced cushioning technology. Perfect for running and everyday wear.", 129.99, 15);
+//                break;
+//            case 2:
+//                currentProduct = new Product(2, "Adidas Ultraboost", "High-performance running shoes with responsive cushioning and energy return.", 179.99, 8);
+//                break;
+//            case 3:
+//                currentProduct = new Product(3, "Converse All Star", "Classic canvas sneakers perfect for casual wear. Timeless design meets modern comfort.", 65.99, 25);
+//                break;
+//            case 4:
+//                currentProduct = new Product(4, "Leather Boots", "Durable leather boots for outdoor adventures. Waterproof and comfortable for all-day wear.", 199.99, 12);
+//                break;
+//            case 5:
+//                currentProduct = new Product(5, "Summer Sandals", "Comfortable sandals perfect for beach days and summer walks. Lightweight and breathable.", 45.99, 30);
+//                break;
+//            default:
+//                currentProduct = new Product(productId, "Fashion Shoe", "Stylish footwear for modern lifestyle. Comfortable and trendy design.", 89.99, 20);
+//                break;
+//        }
+//    }
 
     private void displayProductInfo() {
         tvProductName.setText(currentProduct.getName());
@@ -172,8 +173,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         tvCategory.setText(category);
 
         // Set product image based on category
-        setProductImage(category);
-
+//        setProductImage(category);
+        Glide.with(this).load(currentProduct.getImageUrl()).into(imgProduct);
         // Stock status
         if (currentProduct.getStock() > 0) {
             tvStockBadge.setText("In Stock (" + currentProduct.getStock() + ")");
